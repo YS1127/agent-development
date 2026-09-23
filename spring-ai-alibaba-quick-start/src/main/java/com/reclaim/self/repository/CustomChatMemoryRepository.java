@@ -9,10 +9,13 @@ import com.reclaim.self.entity.MemoryMessage;
 import com.reclaim.self.mapper.MemoryMessageMapper;
 import org.springframework.ai.chat.memory.ChatMemoryRepository;
 import org.springframework.ai.chat.messages.*;
+import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Repository
 public class CustomChatMemoryRepository implements ChatMemoryRepository {
 
     private final MemoryMessageMapper memoryMessageMapper;
@@ -66,7 +69,12 @@ public class CustomChatMemoryRepository implements ChatMemoryRepository {
             entity.setMessages(json);
             memoryMessageMapper.insert(entity);
         } else {
-            existing.setMessages(json);
+            List<Message> allMessages = new ArrayList<>(
+                    parseMessages(existing.getMessages())
+            );
+            allMessages.addAll(messages);
+
+            existing.setMessages(writeMessages(allMessages));
             memoryMessageMapper.updateById(existing);
         }
     }

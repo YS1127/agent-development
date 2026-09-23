@@ -1,14 +1,13 @@
 package com.reclaim.self.advisors;
 
 import com.reclaim.self.repository.CustomChatMemoryRepository;
-import lombok.Builder;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.Message;
-import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Builder
+@Component
 public class CustomChatMemory implements ChatMemory {
 
     private final CustomChatMemoryRepository customChatMemoryRepository;
