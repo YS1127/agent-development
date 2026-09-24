@@ -13,6 +13,7 @@
     <name>ai-agent-learning</name>
     <modules>
         <module>spring-ai-alibaba-quick-start</module>
+        <module>spring-ai-alibaba-rag</module>
     </modules>
 
     <properties>

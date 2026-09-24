@@ -1,0 +1,53 @@
+server:
+  port: 9999
+  servlet:
+    # 解决返回model返回乱码
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  ai:
+    model:
+      chat: deepseek
+    zhipuai:
+      api-key: ${ZHI_PU_KEY}
+      base-url: "https://open.bigmodel.cn/api/paas/"
+      embedding:
+        options:
+          model: embedding-3 #使用嵌入模型的名称
+          dimensions: 256 # 嵌入向量的维度
+    deepseek:
+      api-key: ${DEEPSEEK_AGENT_DEV_KEY}
+      base-url: https://api.deepseek.com
+      chat:
+        options:
+          model: deepseek-flash
+    # 配置mcp client 服务 调用 了 03_spring-alibaba-mcp-server 提供的mcp服务
+    mcp:
+      client:
+        sse:
+          connections:
+            03mcpserver:
+              url: http://127.0.0.1:8080 # 本地另一个五福mcp 服务地址
+            dockerfetchermcpserver:
+              url: http://127.0.0.1:3000 #  docker 启动的网页爬取 mcp 服务地址
+        # mcp 请求超时时间 默认20s
+        request-timeout: 100s
+
+    vectorstore:
+      redis:
+        initialize-schema: true # 启动时自动创建Redis向量索引结构（首次部署需要开启）
+        prefix: ys_rag_prefix # Redis键名前缀，用于区分不同应用的向量数据
+        index: ys_rag_index # Redis向量索引名称
+
+  # 数据源配置
+  data:
+    redis:
+      host: localhost # redis服务地址
+      port: 6380
+
+  http:
+    client:
+      read-timeout: 100000
