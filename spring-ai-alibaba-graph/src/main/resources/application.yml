@@ -1,0 +1,18 @@
+server:
+  port: 8082
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+spring:
+  application:
+    name: graphApplication
+  ai:
+    deepseek:
+      api-key: ${DEEPSEEK_AGENT_DEV_KEY}
+      base-url: https://api.deepseek.com
+      chat:
+        options:
+          model: deepseek-flash
+
